@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ayushi 💖</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff6a88,#ff99ac);
+}
+
+/* Floating hearts */
+.heart{
+  position:absolute;
+  bottom:-20px;
+  font-size:20px;
+  animation:float 6s linear infinite;
+  opacity:0.8;
+}
+
+@keyframes float{
+  from{transform:translateY(0) scale(1);opacity:1;}
+  to{transform:translateY(-110vh) scale(1.5);opacity:0;}
+}
+
+/* Card */
+.card{
+  background:white;
+  padding:35px;
+  width:340px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+  animation:pop 1s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(0);}
+  80%{transform:scale(1.05);}
+  100%{transform:scale(1);}
+}
+
+h1{
+  color:#ff3f6c;
+  margin-bottom:8px;
+}
+
+.kaju{
+  font-size:14px;
+  color:#ff6a88;
+  margin-bottom:10px;
+}
+
+p{
+  color:#555;
+  margin-bottom:20px;
+  font-size:16px;
+}
+
+/* Buttons */
+button{
+  padding:12px 26px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+#yes{
+  background:#ff3f6c;
+  color:white;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
+}
+
+#no{
+  background:#ddd;
+  position:absolute;
+}
+
+/* No message */
+#noText{
+  margin-top:15px;
+  font-size:14px;
+  color:#ff3f6c;
+  min-height:18px;
+}
+
+/* Yes screen */
+.success{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  text-align:center;
+  background:linear-gradient(135deg,#ff6a88,#ff99ac);
+  animation:fade 1s ease;
+}
+
+@keyframes fade{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5e1c6a3b5b.mp3?filename=romantic-piano-112191.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" onclick="startMusic()">
+  <h1>Ayushi 💖</h1>
+  <div class="kaju">(my kaju katli 🍬)</div>
+  <p>Will you be my Valentine? 🌹</p>
+
+  <button id="yes" onclick="yesClicked()">Yes 💕</button>
+  <button id="no" onclick="noClicked()" onmouseover="moveNo()">No 🙃</button>
+
+  <div id="noText"></div>
+</div>
+
+<script>
+/* Start music on first interaction */
+let musicStarted = false;
+function startMusic(){
+  if(!musicStarted){
+    document.getElementById("bgMusic").play();
+    musicStarted = true;
+  }
+}
+
+/* No button runs */
+function moveNo(){
+  const no = document.getElementById("no");
+  const x = Math.random() * (window.innerWidth - 120);
+  const y = Math.random() * (window.innerHeight - 120);
+  no.style.left = x + "px";
+  no.style.top = y + "px";
+}
+
+/* No click messages */
+let noCount = 0;
+const messages = [
+  "soch lo 🤭",
+  "dubara soch lo 😌",
+  "dubara mauka nahi milega 😏"
+];
+
+function noClicked(){
+  startMusic();
+  moveNo();
+  document.getElementById("noText").innerText =
+    messages[noCount % messages.length];
+  noCount++;
+}
+
+/* Yes clicked */
+function yesClicked(){
+  startMusic();
+  document.body.innerHTML = `
+    <div class="success">
+      <h1>YAYYYY 🥰💘</h1>
+      <h2>Ayushi said YES 💖</h2>
+      <p>My kaju katli forever 🍬🌸</p>
+    </div>`;
+}
+
+/* Floating hearts */
+setInterval(()=>{
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.animationDuration = (4+Math.random()*3)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),7000);
+},300);
+</script>
+
+</body>
+</html>
